@@ -1,0 +1,135 @@
+---
+title: "Session 2B"
+author: "Halina Do-Linh"
+date: "8/3/2021"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+#### *Palmer Penguins was developed by Allison with two researchers from University of Alaska to replace the racist burdened irises dataset that was often used by data science professors.*
+
+## Plot a function in `ggplot2`
+
+#### *use back ticks \`\` to notate code. As seen above for ggplot2.*
+
+```{r}
+eq <- function(x) {
+  
+  3 * x ^ 2 + 4
+  
+}
+
+# Use stat_function()
+# ggplot is particular and expects a data frame and not vectors
+# We are specifying end points in a data frame using c()
+
+ggplot(data = data.frame(x = c(1, 100)), aes(x = x)) +
+  stat_function(fun = eq)
+
+
+```
+
+### Task
+
+*Use dollar signs for LATEX (LAH-tech). This is to have nice looking equations in my document.*
+
+Plot $f(x)=2.4-5x^3+2.1*x^2$
+
+Over a range of -50 to 50.
+
+```{r}
+
+eq <- function(x) {
+  
+  2.4 - 5 * (x ^ 3) + 2.1 * (x ^ 2)
+  
+}
+
+ggplot(data = data.frame(x = c(-50, 50)), aes(x = x)) + 
+         stat_function(fun = eq)
+
+
+
+```
+
+### `penguins` body mass and flipper lengths
+
+Basic ggplot scatter plot of body mass (y) and flipper length (x)
+
+```{r}
+
+# ggplot needs three pieces of information to make a basic graph: Where is the data coming from? What variables are you using aka what is your x and y? What kind of graph (i.e. geom_point)?
+# use cmd + shift + C to comment out or comment in lines of code
+# anytime you want to update ggplot with a variable use aes()
+# anytime you want to update ggplot with NOT a variable include it outside aes()
+# ggplot cheat sheet, cookbook and more online for graph customization
+# you can use color codes to specify colors as well. There are entire color palettes online!
+# colors are assigned in the order that R recognizes the groups and groups tend to be organized alphabetically
+# look up what facet wrap does...
+
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species)) + 
+  scale_color_manual(values = c("red", "purple", "blue")) + 
+  labs(x = "Flipper Length (mm)", 
+       y = "Body Mass (g)", 
+       title = "Palmer Penguins Size Measurements", 
+       caption = "Data collected by KB Gorman et al. at Palmer Station",
+       color = "Species") +
+  facet_wrap(~island) +
+  theme_light()
+
+```
+
+Describing the graph:
+
+-   There is a positive correlation.
+
+-   There is a linear relationship.
+
+-   Hetero-spaticity or homo-spacticity aka the range of the model is well represented.
+
+-   There are a few clusters of data.
+
+-   *What are the trends? What are the limits?* *Important to look at axis*
+
+
+### Higher Order Derivative
+```{r}
+gt <- expression(2.2 + 3.1 * t - 5.6 * t ^ 4)
+
+dg_dt <- D(expr = gt, "t")
+
+dg_dt
+
+```
+
+```{r}
+
+d2g_gt2 <- D(expr = dg_dt, "t")
+
+d2g_gt2
+
+```
+
+### Partial Derivatives
+```{r}
+
+f_xyz <- expression(2 * x * y - 3 * (x ^ 2) * (z ^ 3))
+
+df_dx <- D(expr = f_xyz, "x")
+
+df_dy <- D(expr = f_xyz, "y")
+
+df_dz <- D(expr = f_xyz, "z")
+
+```
+
