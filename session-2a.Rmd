@@ -7,5 +7,85 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+## Derivatives in R
+```{r}
+# use the ? in the console to launch the help tab and get more information about a function.
+# use the expression function so that R knows it's a symbolic representation instead of an object.
+# remember that * are key! So 3 * x^2
+# don't have to be explicit with the function, can just put in fx and "x" 
+# note that name = x can be in " " or ' ' 
+# to see the answer of a function, you need to call it (or run the name of what you assigned it)
+
+fx <- expression(x^2)
+
+df_dx <- D(expr = fx, name = "x")
+
+df_dx
+
+
+```
+
+
+# Evaluate the slope of f(x) at x = 831
+```{r}
+
+x <- 831
+
+eval(expr = df_dx)
+
+```
+
+## Example problem
+```{r}
+
+gt <- expression(3 * t ^ 2 - 4 * cos(t))
+
+dg_dt <- D(expr = gt, name = "t")
+
+dg_dt
+
+```
+
+## Writing my own derative functions
+```{r}
+
+hx <- expression(exp(2) + 7 * (3 * x))
+
+dh_dx <- D(expr = hx, name = "x")
+
+dh_dx
+
+fx <- expression((3 * x / 21) + (818 / 9))
+
+df_dx <- D(expr = fx, name = "x")
+
+df_dx
+
+gt <- expression(3 * t ^ 100)
+
+dg_dt <- D(expr = gt, name = "t")
+
+dg_dt
+
+qx <- expression(sin(x) + 2 * cos(x) * 323)
+
+dq_dx <- D(expr = qx, name = "x")
+
+dq_dx
+
+```
+
+## Evaluate slope of f(x) at x = 831 using sequence function
+```{r}
+
+# think about what the graph of this looks
+
+x <- seq(from = -10, to = 10, by = 0.5)
+
+eval(expr = df_dx)
+
 ```
 
